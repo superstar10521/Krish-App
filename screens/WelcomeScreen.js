@@ -12,11 +12,10 @@ import {
   ScrollView
 } from "react-native";
 
-import SantaAnimation from "../components/SantaClaus.js";
 import db from "../config";
 import firebase from "firebase";
 
-import { Icon } from "react-native-elements";
+import { Icon,Input } from "react-native-elements";
 import { RFValue } from "react-native-responsive-fontsize";
 
 export default class WelcomeScreen extends Component {
@@ -71,7 +70,7 @@ export default class WelcomeScreen extends Component {
       .auth()
       .signInWithEmailAndPassword(emailId, password)
       .then(() => {
-        this.props.navigation.navigate("DonateBooks");
+        this.props.navigation.navigate("InformationScreen");
       })
       .catch(error => {
         var errorCode = error.code;
@@ -88,12 +87,18 @@ export default class WelcomeScreen extends Component {
         visible={this.state.isModalVisible}
       >
         <ScrollView style={styles.scrollview}>
+        <View style={styles.santaView}>
+            <Image
+              source={require("../assets/circle-ring-logo.png")}
+              style={styles.santaImage}
+            />
+          </View>
           <View style={styles.signupView}>
             <Text style={styles.signupText}> SIGN UP </Text>
           </View>
           <View style={{ flex: 0.95 }}>
-            <Text style={styles.label}>First Name </Text>
-            <TextInput
+            {/* <Text style={styles.label}>First Name </Text> */}
+            <Input
               style={styles.formInput}
               placeholder={"First Name"}
               maxLength={12}
@@ -104,8 +109,8 @@ export default class WelcomeScreen extends Component {
               }}
             />
 
-            <Text style={styles.label}>Last Name </Text>
-            <TextInput
+            {/* <Text style={styles.label}>Last Name </Text> */}
+            <Input
               style={styles.formInput}
               placeholder={"Last Name"}
               maxLength={12}
@@ -116,8 +121,8 @@ export default class WelcomeScreen extends Component {
               }}
             />
 
-            <Text style={styles.label}>Contact </Text>
-            <TextInput
+            {/* <Text style={styles.label}>Contact </Text> */}
+            <Input
               style={styles.formInput}
               placeholder={"Contact"}
               maxLength={10}
@@ -129,8 +134,8 @@ export default class WelcomeScreen extends Component {
               }}
             />
 
-            <Text style={styles.label}> Address </Text>
-            <TextInput
+            {/* <Text style={styles.label}> Address </Text> */}
+            <Input
               style={styles.formInput}
               placeholder={"Address"}
               multiline={true}
@@ -141,8 +146,8 @@ export default class WelcomeScreen extends Component {
               }}
             />
 
-            <Text style={styles.label}>Email </Text>
-            <TextInput
+            {/* <Text style={styles.label}>Email </Text> */}
+            <Input
               style={styles.formInput}
               placeholder={"Email"}
               keyboardType={"email-address"}
@@ -153,8 +158,9 @@ export default class WelcomeScreen extends Component {
               }}
             />
 
-            <Text style={styles.label}> Password </Text>
-            <TextInput
+            {/* <Text style={styles.label}> Password </Text> */}
+
+            <Input
               style={styles.formInput}
               placeholder={"Password"}
               secureTextEntry={true}
@@ -165,10 +171,10 @@ export default class WelcomeScreen extends Component {
               }}
             />
 
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
+            {/* <Text style={styles.label}>Confirm Password</Text> */}
+            <Input
               style={styles.formInput}
-              placeholder={"Confrim Password"}
+              placeholder={"Confirm Password"}
               secureTextEntry={true}
               onChangeText={text => {
                 this.setState({
@@ -212,14 +218,15 @@ export default class WelcomeScreen extends Component {
           <View style={{ flex: 0.15 }} />
           <View style={styles.santaView}>
             <Image
-              source={require("../assets/santa.png")}
+              source={require("../assets/circle-ring-logo.png")}
               style={styles.santaImage}
             />
           </View>
         </View>
         <View style={{ flex: 0.45 }}>
-          <View style={styles.TextInput}>
-            <TextInput
+          <View style={styles.inputBox}>
+            <Icon name="email" />
+            <Input
               style={styles.loginBox}
               placeholder="abc@example.com"
               placeholderTextColor="gray"
@@ -230,7 +237,10 @@ export default class WelcomeScreen extends Component {
                 });
               }}
             />
-            <TextInput
+            </View>
+        <View style={styles.inputBox}>
+        <Icon name="email" />
+            <Input
               style={[styles.loginBox, { marginTop: RFValue(15) }]}
               secureTextEntry={true}
               placeholder="Enter Password"
@@ -261,13 +271,7 @@ export default class WelcomeScreen extends Component {
           </View>
         </View>
 
-        <View style={{ flex: 0.3 }}>
-          <Image
-            source={require("../assets/book.png")}
-            style={styles.bookImage}
-            resizeMode={"stretch"}
-          />
-        </View>
+       
       </View>
     );
   }
@@ -276,7 +280,9 @@ export default class WelcomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6fc0b8"
+    padding:RFValue(50),
+    // margin:RFValue(20),
+    backgroundColor: "#ffffff"
   },
   loginBox: {
     width: "80%",
@@ -292,7 +298,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: RFValue(25),
-    backgroundColor: "#ffff",
+    backgroundColor: "#21ede9",
     shadowColor: "#000",
     marginBottom: RFValue(10),
     shadowOffset: {
@@ -327,13 +333,13 @@ const styles = StyleSheet.create({
     marginBottom: RFValue(14)
   },
   registerButton: {
-    width: "75%",
+    width: "55%",
     height: RFValue(50),
     marginTop: RFValue(20),
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: RFValue(3),
-    backgroundColor: "#32867d",
+    borderRadius: RFValue(40),
+    backgroundColor: "#875FFC",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -357,7 +363,9 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     flex: 1,
-    backgroundColor: "#fff"
+    padding:RFValue(20),
+    margin:RFValue(10),
+    backgroundColor: "#ffffff"
   },
   signupView: {
     flex: 0.05,
@@ -376,14 +384,22 @@ const styles = StyleSheet.create({
     padding: RFValue(10)
   },
   santaImage: {
+    padding:20,
+    // marginTop:200,
     width: "70%",
     height: "100%",
-    resizeMode: "stretch"
+    resizeMode:"cover"//"stretch"
   },
   TextInput: {
     flex: 0.5,
     alignItems: "center",
     justifyContent: "center"
+  },
+  inputBox:{
+    flexDirection:"row",
+    alignItems: "center",
+    // justifyContent: "center"
+    padding:RFValue(10)
   },
   bookImage: {
     width: "100%",

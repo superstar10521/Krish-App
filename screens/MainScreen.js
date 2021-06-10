@@ -11,30 +11,31 @@ import { ListItem } from "react-native-elements";
 import firebase from "firebase";
 import db from "../config";
 import MyHeader from "../components/MyHeader";
+import PlayVideo from './PlayVideo'
 
-export default class BookDonateScreen extends Component {
+export default class MainScreen extends Component {
   constructor() {
     super();
     this.state = {
       userId: firebase.auth().currentUser.email,
-      requestedBooksList: [],
+      videoLinksList: [],
     };
     this.requestRef = null;
   }
 
-  getRequestedBooksList = () => {
+  getVideoLinksList = () => {
     this.requestRef = db
-      .collection("requested_books")
+      .collection("uploaded_video_links")
       .onSnapshot((snapshot) => {
-        var requestedBooksList = snapshot.docs.map((doc) => doc.data());
+        var videoLinksList = snapshot.docs.map((doc) => doc.data());
         this.setState({
-          requestedBooksList: requestedBooksList,
+          videoLinksList: videoLinksList,
         });
       });
   };
 
   componentDidMount() {
-    this.getRequestedBooksList();
+    this.getVideoLinksList();
   }
 
   componentWillUnmount() {
@@ -47,29 +48,10 @@ export default class BookDonateScreen extends Component {
     return (
       <ListItem
         key={i}
-        title={item.book_name}
-        subtitle={item.reason_to_request}
+        //linkId
+        title={<PlayVideo linkId={item} />}
+        // subtitle={item.description}
         titleStyle={{ color: "black", fontWeight: "bold" }}
-        leftElement={
-          <Image
-            style={{ height: 50, width: 50 }}
-            source={{
-              uri: item.image_link,
-            }}
-          />
-        }
-        rightElement={
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              this.props.navigation.navigate("RecieverDetails", {
-                details: item,
-              });
-            }}
-          >
-            <Text style={{ color: "#ffff" }}>View</Text>
-          </TouchableOpacity>
-        }
         bottomDivider
       />
     );
@@ -78,16 +60,16 @@ export default class BookDonateScreen extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <MyHeader title="Donate Books" navigation={this.props.navigation} />
+        <MyHeader title="Main Screen" navigation={this.props.navigation} />
         <View style={{ flex: 1 }}>
-          {this.state.requestedBooksList.length === 0 ? (
+          {this.state.videoLinksList.length === 0 ? (
             <View style={styles.subContainer}>
-              <Text style={{ fontSize: 20 }}>List Of All Requested Books</Text>
+              <Text style={{ fontSize: 20 }}>List Of All Videos</Text>
             </View>
           ) : (
             <FlatList
               keyExtractor={this.keyExtractor}
-              data={this.state.requestedBooksList}
+              data={this.state.videoLinksList}
               renderItem={this.renderItem}
             />
           )}

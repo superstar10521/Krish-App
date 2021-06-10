@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "book-santa",
-    "slug": "book-santa",
+    "name": "entertainment",
+    "slug": "entertainment",
     "platforms": [
       "ios",
       "android",
@@ -9,9 +9,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/bookLogo.png",
+    "icon": "./assets/videoIcon.png",
     "splash": {
-      "image": "./assets/santa.png",
+      "image": "./assets/video.png",
       "resizeMode": "contain",
       "backgroundColor": "#6fc0b8"
     },
@@ -25,7 +25,7 @@
       "supportsTablet": true
     },
      "android": {
-      "package": "com.bookSanta.bookSanta",
+      "package": "com.KrishApp.VideoApp",
       "versionCode": 1
     }
   }
